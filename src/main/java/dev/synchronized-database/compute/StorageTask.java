@@ -1,6 +1,6 @@
-package dev.storage.compute;
+package dev.concurrentdb.compute;
 
-/* DO NOT MODIFY */
+
 public record StorageTask(int index, String data) {
     public boolean isWrite() {
         return data != null;

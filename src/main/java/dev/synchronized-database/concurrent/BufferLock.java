@@ -1,4 +1,5 @@
-package dev.storage.concurrent;
+package dev.concurrentdb.concurrent;
+
 
 /**
  * Interface that is used by object that solve the
@@ -9,7 +10,7 @@ package dev.storage.concurrent;
  * shared memory while the writer, besides reading, can also write
  * and therefore change/update the current state of the data in the memory
  */
-public interface BufferSemaphore {
+public interface BufferLock {
 	void readSemAcquire() throws Exception;
 	void readSemRelease() throws Exception;
 

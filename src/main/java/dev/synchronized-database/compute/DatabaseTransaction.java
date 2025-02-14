@@ -1,27 +1,25 @@
-package dev.storage.storage;
+package dev.concurrentdb.compute;
 
-import dev.storage.storage.ConcurrentDatabase;
-import dev.storage.compute.StorageTask;
+import dev.concurrentdb.storage.SynchronizedDatabase;
 
-import dev.storage.compute.EntryResult;
 
 /**
  * A class that implements runnable and performs a transaction
  * on th provided database. 
  */
 public class DatabaseTransaction implements Runnable {
-	private ConcurrentDatabase concurrentDB;
+	private SynchronizedDatabase synchronizedDB;
 	private StorageTask task;
 	private EntryResult result;
 	
-	public DatabaseTransaction(ConcurrentDatabase concurrentDatabase) {
-		this.concurrentDB = concurrentDatabase;
+	public DatabaseTransaction(SynchronizedDatabase synchronizedDatabase) {
+		this.synchronizedDB = synchronizedDatabase;
 		this.task = null;
 		this.result = null;
 	}
 
-	public DatabaseTransaction(ConcurrentDatabase concurrentDatabase, StorageTask task) {
-		this.concurrentDB = concurrentDatabase;
+	public DatabaseTransaction(SynchronizedDatabase synchronizedDatabase, StorageTask task) {
+		this.synchronizedDB = synchronizedDatabase;
 		this.task = task;
 		this.result = null;
 	}
@@ -44,10 +42,10 @@ public class DatabaseTransaction implements Runnable {
 			return;
 		}
 
-		if (this.task.isWrite())
-			this.result = this.concurrentDB.addData(this.task.index(), this.task.data());
-		else
-			this.result = this.concurrentDB.getData(this.task.index());
+		// if (this.task.isWrite())
+		// 	this.result = this.synchronizedDB.addData(this.task.index(), this.task.data());
+		// else
+		// 	this.result = this.synchronizedDB.getData(this.task.index());
 	}
 
 	/**

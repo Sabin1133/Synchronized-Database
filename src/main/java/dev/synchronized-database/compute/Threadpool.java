@@ -1,7 +1,8 @@
-package dev.storage.compute;
+package dev.concurrentdb.compute;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.LinkedBlockingQueue;
+
 
 /**
  * A class similar to {@code ExecutorService}, used for parallel
