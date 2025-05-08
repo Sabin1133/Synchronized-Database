@@ -4,7 +4,7 @@ package dev.syncdb.storage;
 public final class SynchronizedDatabase {
     private final SynchronizedBlock[] blocks;
 
-    public SynchronizedDatabase(int size, PriorityType priority) {
+    public SynchronizedDatabase(PriorityType priority, int size) {
         this.blocks =  new SynchronizedBlock[size];
 
         for (int i = 0; i < size; ++i)

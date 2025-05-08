@@ -12,7 +12,7 @@ public class WriterPreferredBufferLock implements BufferLock {
 	private Semaphore readSem = new Semaphore(0);
 	private Semaphore updateSem = new Semaphore(0);
 
-	public void readSemAcquire() throws Exception {
+	public void readLockAcquire() throws Exception {
 		this.enter.acquire();
 
 		// if there are active writers of waiting writers
@@ -34,7 +34,7 @@ public class WriterPreferredBufferLock implements BufferLock {
 		}
 	}
 
-	public void readSemRelease() throws Exception {
+	public void readLockRelease() throws Exception {
 		this.enter.acquire();
 
 		this.active_readers--;
@@ -49,7 +49,7 @@ public class WriterPreferredBufferLock implements BufferLock {
 		}
 	}
 
-	public void updateSemAcquire() throws Exception {
+	public void updateLockAcquire() throws Exception {
 		this.enter.acquire();
 
 		// if there are reades or writers wait
@@ -65,7 +65,7 @@ public class WriterPreferredBufferLock implements BufferLock {
 		this.enter.release();
 	}
 
-	public void updateSemRelease() throws Exception {
+	public void updateLockRelease() throws Exception {
 		this.enter.acquire();
 
 		this.active_writers--;

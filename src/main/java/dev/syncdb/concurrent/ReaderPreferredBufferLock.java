@@ -8,7 +8,7 @@ public class ReaderPreferredBufferLock implements BufferLock {
 	private Semaphore readSem = new Semaphore(1);
 	private Semaphore updateSem = new Semaphore(1);
 
-	public void readSemAcquire() throws Exception {
+	public void readLockAcquire() throws Exception {
 		this.readSem.acquire();
 
 		this.active_readers++;
@@ -21,7 +21,7 @@ public class ReaderPreferredBufferLock implements BufferLock {
 		this.readSem.release();
 	}
 
-	public void readSemRelease() throws Exception {
+	public void readLockRelease() throws Exception {
 		this.readSem.acquire();
 
 		this.active_readers--;
@@ -33,12 +33,12 @@ public class ReaderPreferredBufferLock implements BufferLock {
 		this.readSem.release();
 	}
 
-	public void updateSemAcquire() throws Exception {
+	public void updateLockAcquire() throws Exception {
 		// wait for all readers to leave
 		this.updateSem.acquire();
 	}
 
-	public void updateSemRelease() throws Exception {
+	public void updateLockRelease() throws Exception {
 		// let anyone enter
 		this.updateSem.release();
 	}

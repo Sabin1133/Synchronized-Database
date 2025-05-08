@@ -10,10 +10,18 @@ package dev.syncdb.concurrent;
  * shared memory while the writer, besides reading, can also write
  * and therefore change/update the current state of the data in the memory
  */
-public interface BufferLock {
-	void readSemAcquire() throws Exception;
-	void readSemRelease() throws Exception;
+// public interface BufferLock {
+// 	void readSemAcquire() throws Exception;
+// 	void readSemRelease() throws Exception;
 
-	void updateSemAcquire() throws Exception;
-	void updateSemRelease() throws Exception;
+// 	void updateSemAcquire() throws Exception;
+// 	void updateSemRelease() throws Exception;
+// }
+
+public interface BufferLock {
+	void readLockAcquire() throws Exception;
+	void readLockRelease() throws Exception;
+
+	void updateLockAcquire() throws Exception;
+	void updateLockRelease() throws Exception;
 }

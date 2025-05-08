@@ -30,7 +30,7 @@ public final class SynchronizedBlock {
 
     public void setContent(byte[] data) {
         try {
-            this.lock.updateSemAcquire();
+            this.lock.updateLockAcquire();
         } catch (Exception e) {}
 
         this.data = Arrays.copyOf(data, data.length);
@@ -38,7 +38,7 @@ public final class SynchronizedBlock {
         ++this.sequence;
 
         try {
-            this.lock.updateSemRelease();
+            this.lock.updateLockRelease();
         } catch (Exception e) {}
     }
 
@@ -47,13 +47,13 @@ public final class SynchronizedBlock {
         byte[] data = null;
 
         try {
-            this.lock.readSemAcquire();
+            this.lock.readLockAcquire();
         } catch (Exception e) {}
 
         data = Arrays.copyOf(this.data, this.data.length);
 
         try {
-            this.lock.readSemRelease();
+            this.lock.readLockRelease();
         } catch (Exception e) {}
 
         return data;
