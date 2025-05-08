@@ -42,10 +42,13 @@ public class DatabaseTransaction implements Runnable {
 			return;
 		}
 
-		// if (this.task.isWrite())
-		// 	this.result = this.synchronizedDB.addData(this.task.index(), this.task.data());
-		// else
-		// 	this.result = this.synchronizedDB.getData(this.task.index());
+		if (this.task.isWrite())
+			this.synchronizedDB.setData(this.task.index(), this.task.data().getBytes());
+
+		byte[] data = this.synchronizedDB.getData(this.task.index());
+		int sequence = this.synchronizedDB.getSequence(this.task.index());
+
+		this.result = new EntryResult(this.task.index(), new String(data), sequence);
 	}
 
 	/**

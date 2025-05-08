@@ -19,6 +19,10 @@ public final class SynchronizedDatabase {
         return this.blocks[index].getContent();
     }
 
+    public int getSequence(int index) {
+        return this.blocks[index].getSequence();
+    }
+
     public int getSize() {
         return this.blocks.length;
     }
