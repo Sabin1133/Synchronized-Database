@@ -1,4 +1,4 @@
-package dev.concurrentdb.compute;
+package dev.syncdb.compute;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.LinkedBlockingQueue;

@@ -1,4 +1,4 @@
-package dev.concurrentdb.concurrent;
+package dev.syncdb.concurrent;
 
 
 /**

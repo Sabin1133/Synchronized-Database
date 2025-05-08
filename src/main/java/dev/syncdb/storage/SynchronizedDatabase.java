@@ -1,4 +1,4 @@
-package dev.concurrentdb.storage;
+package dev.syncdb.storage;
 
 
 public final class SynchronizedDatabase {

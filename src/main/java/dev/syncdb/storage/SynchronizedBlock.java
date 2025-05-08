@@ -1,10 +1,10 @@
-package dev.concurrentdb.storage;
+package dev.syncdb.storage;
 
 import java.util.Arrays;
 
-import dev.concurrentdb.concurrent.BufferLock;
-import dev.concurrentdb.concurrent.ReaderPreferredBufferLock;
-import dev.concurrentdb.concurrent.WriterPreferredBufferLock;
+import dev.syncdb.concurrent.BufferLock;
+import dev.syncdb.concurrent.ReaderPreferredBufferLock;
+import dev.syncdb.concurrent.WriterPreferredBufferLock;
 
 
 public final class SynchronizedBlock {

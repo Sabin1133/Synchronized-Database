@@ -1,6 +1,6 @@
-package dev.concurrentdb.compute;
+package dev.syncdb.compute;
 
-import dev.concurrentdb.storage.SynchronizedDatabase;
+import dev.syncdb.storage.SynchronizedDatabase;
 
 
 /**

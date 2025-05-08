@@ -1,4 +1,4 @@
-package dev.concurrentdb.compute;
+package dev.syncdb.compute;
 
 
 public record StorageTask(int index, String data) {
