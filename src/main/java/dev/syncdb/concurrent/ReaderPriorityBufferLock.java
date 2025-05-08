@@ -3,7 +3,7 @@ package dev.syncdb.concurrent;
 import java.util.concurrent.Semaphore;
 
 
-public class ReaderPreferredBufferLock implements BufferLock {
+public class ReaderPriorityBufferLock implements BufferLock {
 	private int active_readers = 0;
 	private Semaphore readSem = new Semaphore(1);
 	private Semaphore updateSem = new Semaphore(1);

@@ -3,8 +3,8 @@ package dev.syncdb.storage;
 import java.util.Arrays;
 
 import dev.syncdb.concurrent.BufferLock;
-import dev.syncdb.concurrent.ReaderPreferredBufferLock;
-import dev.syncdb.concurrent.WriterPreferredBufferLock;
+import dev.syncdb.concurrent.ReaderPriorityBufferLock;
+import dev.syncdb.concurrent.WriterPriorityBufferLock;
 
 
 public final class SynchronizedBlock {
@@ -17,13 +17,13 @@ public final class SynchronizedBlock {
 
         switch (priority) {
             case ReaderPriority:
-                this.lock = new ReaderPreferredBufferLock();
+                this.lock = new ReaderPriorityBufferLock();
                 break;
             case WriterPriority:
-                this.lock = new WriterPreferredBufferLock();
+                this.lock = new WriterPriorityBufferLock();
                 break;
             default:
-                this.lock = new ReaderPreferredBufferLock();
+                this.lock = new ReaderPriorityBufferLock();
                 break;
         }
     }
