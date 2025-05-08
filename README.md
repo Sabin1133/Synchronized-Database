@@ -16,42 +16,62 @@ Copyright (c) 2024 Sabin Padurariu
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┗┛┗┛┗┛┗━━━┛━━━━━━┗┛━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<br/>
-
-# **Synchronized Database**
+# Synchronized Database
 
 ## General Overview
 
-The package includes an `ExecutorService` processig type class used for parallel execution and a Database class that solves the problem of concurrency using the reader-writer approach.
+Basic implementation of an in-memory database that stores data of UTF-8 format
+from concurrent queries.
 
-## Buffer Semaphore
+## Functionality
 
-The buffer semaphore is used to solve the reader-writer shared memory synchronization problem. The name has nothing to do with the fact that in this example it is used for a database "buffer" that can be "read" or "updated".
+The sole purpose of the database is handling concurrent queries that would
+otherwise make storing data impossible because of race conditions.
 
-The semaphore is used if two types of threads (reader and writer) try to access a shared memory at the same time.
+The database solves the problem of race condition created by concurrent queries
+by leveraging the reader-writer approach.
 
-The read will try to read the data in memory while the writer will try to read/write data from/to the shared memory. So in other words the reader will try to inspect the current state while the writer will try to update the current state.
+A synchronized database requires a synchronization mechanism. If the mechanism
+is used on the entire data structure, like a global lock, rather than on
+individual components, there is no performance upgrade because the writers still
+update the database in a synchronized manner. In order for an increase in
+performance there needs to be a synchronization mechanism per buffer. In this
+way operations on different buffers are executed in parallel.
 
-The second implementation of the writers' priority version uses condition variables, implemented using the java monitor of any object. The `read` and `update` semaphores, in the writers' priority version, act more like condition variables because once a sempahore is incremented one thread that was waiting on that semaphore can continue its execution. So in other words the thread is woken up and the behaviour is similar to that of a condition variable.
+## Implementation
 
-## The Database
+The package includes classes for processing queries and storing data.
 
-The database is just a simple array of buffers (`char` arrays) that can
-store strings. All buffers can be read or written to and have a sequence number used for testing the integrity of the data.
+### Buffer Lock
 
-Every buffer has its own Semaphore in order for the operations
-to be true parallel.
+The buffer Lock is used to solve the reader-writer shared memory problem and
+has a reader priority implementation and a writer priority implementation.
 
-## ThreadPool
+The Lock is used when two types of threads (reader and writer) try to access
+a shared buffer at the same time. The reader tries to read the data in the
+buffer while the writer tries to read/write data from/to the shared buffer. So
+in other words the reader tries to see the current state while the writer tries
+to update the current state.
 
-The threadpool is a processing class, similar to the `ExecutorService` class, that processes tasks in parallel.
+The implementation uses a synchronization mechanism called condition variable,
+implemented using semaphores. The `read` and `update` semaphores act more like
+condition variables because once a sempahore is incremented one thread that was
+waiting on that semaphore can continue its execution. So in other words the
+thread is notified woken up (notified) and continues its execution, behaviour
+that is similar to that of a condition variable.
 
-It uses worker threads to process all submited tasks, which are placed in a queue waiting to be processed, in a true parallel manner. 
+### In-memory Database
 
-## Remarks
+The database is just a simple collection of blocks that can be indexed. A block
+holds a buffer for strings and a buffer lock for synchronization.
+In this way writers can write to different blocks at the same time without
+blocking the entire database. The blocks also have a sequence number used for
+testing the integrity of the data.
 
-In order to implement a Concurrent Database a synchronization mechanism needs to be used. If the mechanism is used for the entire data structure,
-global lock, there will be no upgrade because the writers will still use the database in a synchronized manner. In order for an increase in performance to exist there needs to be a synchronization mechanism per memory region that allows operations on different buffers
-to be executed in parallel.
+### Thread Pool
 
-Also the writer threads, in general, bring a decrease in performance because they need more synchronization in order to maintain data integrity because they update the current state so even in parallel they take more time to execuite. Whereas the reader threads only read the state, operation which can be achieved in parallel with no synchronization mechanisms, meaning they are faster overall. So the time of proccessing increases with the number of writer threads.
+The threadpool is a processing class, similar to the `ExecutorService` class,
+that processes tasks in parallel.
+
+It uses worker threads to process all submited tasks, which are placed in a
+queue waiting to be executed, in parallel. 
